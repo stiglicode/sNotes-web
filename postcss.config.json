@@ -1,0 +1,4 @@
+{
+  "syntax": "postcss-scss",
+  "parser": "postcss-scss"
+}

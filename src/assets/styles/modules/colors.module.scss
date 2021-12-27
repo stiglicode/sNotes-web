@@ -1,0 +1,10 @@
+@import "../core/colors";
+
+:export {
+	primary: $p-8;
+	primaryLight: $p-5;
+	primaryDark: $primary;
+	secondary: $s-8;
+	secondaryLight: $s-5;
+	secondaryDark: $secondary;
+}
