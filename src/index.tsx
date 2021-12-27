@@ -5,21 +5,22 @@ import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import { createTheme, ThemeProvider } from "@mui/material";
 import axios from "axios";
+import colors from "./assets/styles/modules/colors.module.scss";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_SERVER;
 
 const theme = createTheme({
   palette: {
     primary: {
-      light: "#FCA31124",
-      main: "#FCA311BF",
-      dark: "#FCA311",
+      light: colors.primaryLight,
+      main: colors.primary,
+      dark: colors.primaryDark,
       contrastText: "#fff",
     },
     secondary: {
-      light: "#00121924",
-      main: "#001219BF",
-      dark: "#001219",
+      light: colors.secondaryLight,
+      main: colors.secondary,
+      dark: colors.secondaryDark,
       contrastText: "#fff",
     },
   },
