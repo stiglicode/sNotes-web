@@ -4,7 +4,6 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { RecoilRoot } from "recoil";
 import { createTheme, ThemeProvider } from "@mui/material";
-import colors from "./assets/styles/modules/colors.module.scss";
 import axios from "axios";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_SERVER;
@@ -12,15 +11,15 @@ axios.defaults.baseURL = process.env.REACT_APP_API_SERVER;
 const theme = createTheme({
   palette: {
     primary: {
-      light: colors.primaryLight,
-      main: colors.primary,
-      dark: colors.primaryDark,
+      light: "#FCA31124",
+      main: "#FCA311BF",
+      dark: "#FCA311",
       contrastText: "#fff",
     },
     secondary: {
-      light: colors.secondaryLight,
-      main: colors.secondary,
-      dark: colors.secondaryDark,
+      light: "#00121924",
+      main: "#001219BF",
+      dark: "#001219",
       contrastText: "#fff",
     },
   },
