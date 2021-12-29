@@ -8,8 +8,13 @@ import { AuthValidation } from "../../../utilities/validation/authntication.vali
 import { SignupType } from "../../../utilities/types/authentication.type";
 import axios from "axios";
 import SaveToken from "../../../services/LocalStorage/jwt/save-token";
+import useQuery from "../../../utilities/hooks/useQuery";
+import { Navigate } from "react-router-dom";
+
 
 const Signup = () => {
+  if(useQuery().get("enter") !== "allow") return <Navigate to={"/login"}/>
+
   const [sse, setSSE] = useState({
     [AUTH.EMAIL]: "",
   });
