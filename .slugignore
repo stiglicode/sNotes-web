@@ -4,4 +4,4 @@
 .prettierrc
 README.md
 tslint.json
-.yarn.lock
+LICENSE
