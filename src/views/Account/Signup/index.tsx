@@ -13,8 +13,6 @@ import { Navigate } from "react-router-dom";
 
 
 const Signup = () => {
-  if(useQuery().get("enter") !== "allow") return <Navigate to={"/login"}/>
-
   const [sse, setSSE] = useState({
     [AUTH.EMAIL]: "",
   });
@@ -56,6 +54,8 @@ const Signup = () => {
     validationSchema: AuthValidation.signup,
     onSubmit: handleSubmit,
   });
+
+  if(useQuery().get("enter") !== "allow") return <Navigate to={"/login"}/>
 
   return (
     <Box component={"div"} className={"account-wrapper"}>
