@@ -1,0 +1,72 @@
+.error-page {
+	width: 100%;
+	height: 100%;
+	display: grid;
+	place-items: center;
+	background-color: $p-3;
+	user-select: none;
+
+	&_box {
+		display: flex;
+		flex-direction: column;
+		padding-bottom: $gutter * 2;
+
+		&--code {
+			padding: 0 10rem;
+			flex: 1;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-size: 6rem;
+			color: $primary;
+			font-family: Consolas, monaco, monospace;
+			background-color: $p-4;
+			border-bottom-left-radius: $border-radius;
+			border-bottom-right-radius: $border-radius;
+		}
+
+		&--message {
+			padding: $gutter $gutter * 2;
+			background-color: $primary;
+			color: #fff;
+			border-top-left-radius: $border-radius;
+			border-top-right-radius: $border-radius;
+		}
+
+		&--return {
+			margin-top: 2rem;
+			display: flex;
+			flex-direction: row;
+			justify-content: center;
+
+			button a {
+				color: #fff;
+				display: flex;
+				flex-direction: row;
+				justify-content: center;
+				align-items: center;
+				line-height: 1;
+				text-decoration: none;
+			}
+
+			button a span {
+				line-height: inherit;
+				position: relative;
+				top: 2px;
+				margin-left: .5em;
+			}
+		}
+
+		&--hint {
+			display: flex;
+			flex-direction: row;
+			margin-top: 1.5rem;
+			font-size: 1.3rem;
+			color: $primary;
+			background-color: $p-4;
+			border-radius: $border-radius;
+			padding: $gutter 0 $gutter $gutter;
+			border-left: solid 5px $primary;
+		}
+	}
+}
