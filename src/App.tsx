@@ -5,6 +5,7 @@ import "./assets/styles/style.scss";
 import Signup from "./views/Account/Signup";
 import ReceiveToken from "./services/LocalStorage/jwt/receive-token";
 import Signin from "./views/Account/Signin";
+import ErrorPage from "./views/Error/ErrorPage";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         {ReceiveToken() ? (
           <>
             <Route path={"/"} element={<div>aaaa</div>} />
+            <Route path={"*"} element={<ErrorPage statusCode={404} message={"This page doesn't exist"} /> } />
           </>
         ) : (
           <>
