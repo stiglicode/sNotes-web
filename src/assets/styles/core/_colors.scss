@@ -1,5 +1,17 @@
 $primary: #fca311;
 $secondary: #001219;
+$danger: #e14141;
+$success: #7add22;
+$info: #4db3e5;
+
+$i-8: lighten($info, 10%);
+$i-5: lighten($info, 25%);
+
+$e-8: lighten($danger, 10%);
+$e-5: lighten($danger, 25%);
+
+$su-8: lighten($success, 10%);
+$su-5: lighten($success, 25%);
 
 $s-9: rgba($color: $secondary, $alpha: .85);
 $s-8: rgba($color: $secondary, $alpha: .75);

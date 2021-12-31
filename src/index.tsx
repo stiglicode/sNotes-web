@@ -23,6 +23,15 @@ const theme = createTheme({
       dark: colors.secondaryDark,
       contrastText: "#fff",
     },
+    error: {
+      main: colors.error,
+    },
+    info: {
+      main: colors.info,
+    },
+    success: {
+      main: colors.success,
+    },
   },
 });
 
