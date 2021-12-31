@@ -5,4 +5,5 @@ export enum AUTH {
   EMAIL = "email",
   PASSWORD = "password",
   CONFIRM_PASSWORD = "re-password",
+  PERMISSION = "permission",
 }
