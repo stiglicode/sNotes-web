@@ -1,0 +1,24 @@
+.management-layer {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+
+	&_file-name {
+		font-size: 5rem;
+		font-weight: bold;
+		color: $p-3;
+		z-index: 2;
+		display: grid;
+		align-self: center;
+		opacity: 0;
+		transition: .2s;
+		pointer-events: none;
+		transform: translateY(-100%);
+
+		&.active {
+			pointer-events: all;
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+}

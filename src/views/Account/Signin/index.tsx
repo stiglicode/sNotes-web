@@ -7,6 +7,7 @@ import { AuthValidation } from "../../../utilities/validation/authntication.vali
 import { SigninType } from "../../../utilities/types/authentication.type";
 import axios from "axios";
 import SaveToken from "../../../services/LocalStorage/jwt/save-token";
+import ReceiveToken from "../../../services/LocalStorage/jwt/receive-token";
 
 const Signin = () => {
   const [sse, setSSE] = useState({
@@ -22,7 +23,12 @@ const Signin = () => {
       })
       .then((res) => {
         if (res?.data?.status === 200) {
-          return SaveToken(res?.data?.token);
+          SaveToken(res?.data?.token);
+          if (ReceiveToken() === res?.data?.token) {
+            return (window.location.pathname = "/");
+          } else {
+            return (window.location.pathname = "/login");
+          }
         } else {
           if (res?.data?.error === "e-p") {
             return setSSE({

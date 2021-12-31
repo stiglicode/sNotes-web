@@ -1,0 +1,40 @@
+.root-layer {
+	background-color: $p-4;
+	height: 100vh;
+	width: 100vw;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+
+	.manager-opener {
+		margin: 0;
+		outline: unset;
+		border: none;
+		background-color: $primary;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: $gutter;
+		border-radius: $border-radius;
+		color: #ffffff;
+		position: absolute;
+		left: $gutter * 2;
+		top: 1.5625rem;
+		z-index: 999;
+		box-shadow: $shadow;
+
+		svg {
+			transition: .2s;
+			opacity: 0;
+			position: absolute;
+
+			&.active {
+				opacity: 1;
+				position: relative;
+			}
+		}
+	}
+}

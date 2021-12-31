@@ -7,6 +7,7 @@ import ReceiveToken from "./services/LocalStorage/jwt/receive-token";
 import Signin from "./views/Account/Signin";
 import ErrorPage from "./views/Error";
 import axios from "axios";
+import Main from "./views/Main";
 
 function App() {
   const [backendIsAlive, setBackendIsAlive] = useState(true);
@@ -14,8 +15,7 @@ function App() {
   useEffect(() => {
     axios
       .get("/")
-      .then((res) => {
-        console.log(res);
+      .then(() => {
         return setBackendIsAlive(true);
       })
       .catch(() => {
@@ -29,7 +29,7 @@ function App() {
         <Routes>
           {ReceiveToken() ? (
             <>
-              <Route path={"/"} element={<div>aaaa</div>} />
+              <Route path={"/"} element={<Main />} />
               <Route path={"*"} element={<ErrorPage statusCode={404} message={"This page doesn't exist"} home />} />
             </>
           ) : (
