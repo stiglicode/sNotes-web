@@ -3,7 +3,7 @@ import { RecoilState, useRecoilValue } from "recoil";
 import { AccountCircle, Logout, Settings } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { IconButton } from "@mui/material";
-import RemoveToken from "../../../services/LocalStorage/jwt/remove-toke";
+import RemoveToken from "../../../services/LocalStorage/jwt/remove-token";
 import ReceiveToken from "../../../services/LocalStorage/jwt/receive-token";
 
 const ProfileManager = ({ atom }: { atom: RecoilState<any>[] }) => {
@@ -15,8 +15,6 @@ const ProfileManager = ({ atom }: { atom: RecoilState<any>[] }) => {
   useEffect((): any => {
     if (loggedOut && !ReceiveToken()) return (window.location.pathname = "/login");
   }, [loggedOut]);
-
-  console.log(nickname);
 
   return (
     <div className={`profile-manager ${managerVisibility ? "active" : ""}`}>

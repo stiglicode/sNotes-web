@@ -23,8 +23,12 @@
 		color: $primary;
 		text-decoration: none;
 
+		svg {
+			font-size: 2rem;
+		}
+
 		span {
-			margin-left: .5rem;
+			margin-left: .3rem;
 		}
 	}
 

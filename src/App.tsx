@@ -29,7 +29,9 @@ function App() {
         <Routes>
           {ReceiveToken() ? (
             <>
-              <Route path={"/"} element={<Main />} />
+              <Route path={"/"} element={<Main />}>
+                <Route path={"/settings"} />
+              </Route>
               <Route path={"*"} element={<ErrorPage statusCode={404} message={"This page doesn't exist"} home />} />
             </>
           ) : (

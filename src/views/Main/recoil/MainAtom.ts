@@ -3,7 +3,7 @@ import { AUTH } from "../../../utilities/enums/authentication.enum";
 
 export const ManagerOpenStateAtom = atom({
   key: "ManagerOpenStateAtom",
-  default: true as boolean,
+  default: false as boolean,
 });
 
 export const UserDetailsAtom = atom({

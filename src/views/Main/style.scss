@@ -25,6 +25,7 @@
 		top: 1.5625rem;
 		z-index: 999;
 		box-shadow: $shadow;
+		min-width: unset;
 
 		svg {
 			transition: .2s;
