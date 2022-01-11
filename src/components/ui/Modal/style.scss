@@ -19,6 +19,8 @@
 		pointer-events: all;
 		position: relative;
 		z-index: 999;
+		display: block;
+		resize: both;
 
 		&--head {
 			display: flex;
@@ -27,6 +29,10 @@
 			align-items: center;
 			padding: $gutter $gutter $gutter $gutter * 2;
 			background-color: $p-1;
+
+			&-label {
+				cursor: default;
+			}
 
 			&-close {
 				padding: $gutter !important;

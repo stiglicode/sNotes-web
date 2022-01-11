@@ -8,7 +8,7 @@ const ManagementLayer = ({ atom }: { atom: RecoilState<any>[] }) => {
 
   return (
     <div className={`layer ${managerVisibility ? "active" : ""} management-layer`}>
-      <SideMenu atom={[atom[0]]} />
+      <SideMenu atom={[atom[0], atom[2]]} />
       <span className={`management-layer_file-name ${managerVisibility ? "active" : ""}`}>Name of file</span>
       <ProfileManager atom={[atom[0], atom[1]]} />
     </div>

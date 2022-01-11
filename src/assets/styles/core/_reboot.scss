@@ -21,3 +21,21 @@ h1, h2, h3, h4, h5, h6 {
 	margin-inline-start: 0;
 	margin-inline-end: 0;
 }
+
+button {
+	border: none;
+	outline: none;
+	padding: 0;
+	margin: 0;
+	background: unset;
+	cursor: pointer;
+	display: flex;
+}
+
+.pop-up {
+	transition: .2s;
+
+	&:active {
+		transform: scale(.85);
+	}
+}

@@ -3,7 +3,7 @@ import EditorLayer from "../../components/layer/EditorLayer";
 import ManagementLayer from "../../components/layer/ManagementLayer";
 import { Close, Menu } from "@mui/icons-material";
 import { useRecoilState, useSetRecoilState } from "recoil";
-import { ManagerOpenStateAtom, UserDetailsAtom } from "./recoil/MainAtom";
+import { CacheStoreAtom, ManagerOpenStateAtom, UserDetailsAtom } from "./recoil/MainAtom";
 import ReceiveToken from "../../services/LocalStorage/jwt/receive-token";
 import axios from "axios";
 import { Navigate, useLocation } from "react-router-dom";
@@ -41,7 +41,7 @@ const Main = () => {
         <Close className={`${isManagerOpen ? "active" : ""}`} />
       </Button>
       <EditorLayer />
-      <ManagementLayer atom={[ManagerOpenStateAtom, UserDetailsAtom]} />
+      <ManagementLayer atom={[ManagerOpenStateAtom, UserDetailsAtom, CacheStoreAtom]} />
       {location.pathname === "/settings" ? (
         <Modal
           body={<div>aaaa</div>}

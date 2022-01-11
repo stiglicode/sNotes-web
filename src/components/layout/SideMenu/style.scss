@@ -6,12 +6,72 @@
 	padding: $gutter;
 	z-index: 2;
 	box-shadow: $shadow;
-	display: grid;
 	align-self: center;
 	transform: translateX(-100%);
 	transition: .2s ease-in;
+	pointer-events: all;
+
+	.MuiTreeItem-content {
+		width: unset;
+	}
 
 	&.active {
 		transform: translateX(0);
+	}
+
+	&_actions {
+		display: flex;
+		flex-direction: row;
+		height: fit-content;
+		margin-top: 1rem;
+
+		&--box {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			width: 20px;
+			overflow-x: hidden;
+			transition: .3s;
+			margin-left: .5rem;
+
+			&-button {
+				color: $primary;
+			}
+
+			&:first-child {
+				margin-left: 0;
+			}
+
+			&-input {
+				width: 100%;
+				opacity: 1;
+				//transition: .3s;
+				border: none;
+				outline: none;
+				background: unset;
+				box-shadow: 0px 1px 0px 0px $p-3;
+				color: $primary;
+
+				&::placeholder {
+					color: $p-6;
+				}
+
+				//&:focus {
+				//	opacity: 1;
+				//}
+			}
+
+			&.focused {
+				width: 100%;
+			}
+
+			&:hover {
+				width: 100%;
+				//
+				//input {
+				//	opacity: 1;
+				//}
+			}
+		}
 	}
 }
