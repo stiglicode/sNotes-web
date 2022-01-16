@@ -59,6 +59,7 @@
     "dotenv": "^10.0.0",
     "eslint": "^8.5.0",
     "eslint-plugin-react": "^7.28.0",
+    "mini-css-extract-plugin": "2.4.5",
     "node-sass": "^7.0.0",
     "postcss-scss": "^4.0.2",
     "prettier": "^2.5.1",
