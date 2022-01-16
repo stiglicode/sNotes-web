@@ -7,11 +7,13 @@ const generateTree = (data: FlatItemType[], parentId: number | null): TreeItemTy
       return [
         ...tree,
         {
+          id: record._id,
           parent: record.parent,
-          id: record.id,
+          child_id: record.id,
           name: record.title,
           children: generateTree(data, record.id),
           type: record.type,
+          detail_id: record.detail_id,
         },
       ];
     }, []);

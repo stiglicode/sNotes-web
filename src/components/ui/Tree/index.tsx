@@ -4,7 +4,7 @@ import { TreeView } from "@mui/lab";
 import RenderItem from "./render/item";
 import { TreeCallbackItemType, TreeItemType } from "../../../utilities/types/tree.type";
 
-const Tree = ({ data, selected }: { data: TreeItemType[]; selected: (cb: TreeCallbackItemType) => any }) => {
+const Tree: React.FC<{ data: TreeItemType[]; selected: (cb: TreeCallbackItemType) => any }> = ({ data, selected }) => {
   return (
     <TreeView
       aria-label="file system navigator"

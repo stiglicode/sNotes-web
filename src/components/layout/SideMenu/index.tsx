@@ -10,38 +10,36 @@ import ReceiveToken from "../../../services/LocalStorage/jwt/receive-token";
 
 const SideMenu = ({ atom }: { atom: RecoilState<any>[] }) => {
   const managerVisibility = useRecoilValue(atom[0]);
-  const [cache, setCache] = useRecoilState<CachedTreeType>(atom[1]);
+  const [{ tree, flat }, setCache] = useRecoilState<CachedTreeType>(atom[1]);
   const token = ReceiveToken();
-  console.log(cache);
 
   useEffect(() => {
     console.log(window.localStorage);
     axios.get("/records/one", { headers: { ["x-access-token"]: token } }).then((res) => {
+      console.log(res?.data);
       return setCache((prev) => {
         return {
           ...prev,
           flat: res.data,
-          tree: generateTree(res.data, 0),
         };
       });
     });
   }, []);
-  // useEffect(() => {
-  //   setCache((prev) => {
-  //     return {
-  //       ...prev,
-  //       tree: generateTree(prev.flat, null),
-  //     };
-  //   });
-  // }, [cache.flat]);
-  console.log(cache);
+  useEffect(() => {
+    setCache((prev) => {
+      return {
+        ...prev,
+        tree: generateTree(prev.flat, 0),
+      };
+    });
+  }, [flat]);
 
   return (
     <div className={`side-menu ${managerVisibility ? "active" : ""}`}>
       <SearchField placeholder={"Search..."} />
-      <Actions />
+      <Actions atom={atom[1]} />
       <Tree
-        data={cache.tree}
+        data={tree}
         selected={(data) => {
           setCache((prev) => ({
             ...prev,
