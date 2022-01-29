@@ -10,6 +10,26 @@
 	transform: translateX(-100%);
 	transition: .2s ease-in;
 	pointer-events: all;
+	display: flex;
+	flex-direction: column;
+
+	&_list {
+		width: 100%;
+		flex: 1;
+		overflow-y: auto;
+
+		&--group {
+			color: $p-7 !important;
+
+			&-icon {
+				color: $p-9 !important;
+			}
+
+			&-expand {
+				color: $primary !important;
+			}
+		}
+	}
 
 	.MuiTreeItem-content {
 		width: unset;

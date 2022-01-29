@@ -2,18 +2,21 @@ import React, { useEffect } from "react";
 import EditorLayer from "../../components/layer/EditorLayer";
 import ManagementLayer from "../../components/layer/ManagementLayer";
 import { Close, Menu } from "@mui/icons-material";
-import { useRecoilState, useSetRecoilState } from "recoil";
-import { CacheStoreAtom, ManagerOpenStateAtom, UserDetailsAtom } from "./recoil/MainAtom";
+import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
+import { CacheStoreAtom, ManagerOpenStateAtom, SettingsAtom, UserDetailsAtom } from "./recoil/MainAtom";
 import ReceiveToken from "../../services/LocalStorage/jwt/receive-token";
 import axios from "axios";
 import { Navigate, useLocation } from "react-router-dom";
 import { Button } from "@mui/material";
 import Modal from "../../components/ui/Modal";
+import { useCountdown } from "../../utilities/hooks/useCountdown";
 
 const Main = () => {
   const [isManagerOpen, setManagerOpen] = useRecoilState(ManagerOpenStateAtom);
   const setUserDetails = useSetRecoilState(UserDetailsAtom);
   const location = useLocation();
+  const { __token } = useRecoilValue(SettingsAtom);
+  const { hours, minutes, seconds } = useCountdown(__token.expireIn, { every: "second" });
 
   useEffect(() => {
     const token = ReceiveToken();
@@ -40,11 +43,26 @@ const Main = () => {
         <Menu className={`${!isManagerOpen ? "active" : ""}`} />
         <Close className={`${isManagerOpen ? "active" : ""}`} />
       </Button>
-      <EditorLayer />
+      <EditorLayer atom={[ManagerOpenStateAtom]} />
       <ManagementLayer atom={[ManagerOpenStateAtom, UserDetailsAtom, CacheStoreAtom]} />
       {location.pathname === "/settings" ? (
         <Modal
-          body={<div>aaaa</div>}
+          body={
+            <div>
+              <div>
+                <span>Hours: </span>
+                <strong>{hours}</strong>
+              </div>
+              <div>
+                <span>Minutes: </span>
+                <strong>{minutes}</strong>
+              </div>
+              <div>
+                <span>Seconds:</span>
+                <strong>{seconds}</strong>
+              </div>
+            </div>
+          }
           onClose={() => console.log("aaa")}
           onOk={() => {
             console.log("bbb");

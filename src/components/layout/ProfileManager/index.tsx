@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { RecoilState, useRecoilValue } from "recoil";
 import { AccountCircle, Logout, Settings } from "@mui/icons-material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IconButton } from "@mui/material";
 import RemoveToken from "../../../services/LocalStorage/jwt/remove-token";
 import ReceiveToken from "../../../services/LocalStorage/jwt/receive-token";
@@ -9,11 +9,12 @@ import ReceiveToken from "../../../services/LocalStorage/jwt/receive-token";
 const ProfileManager = ({ atom }: { atom: RecoilState<any>[] }) => {
   const managerVisibility = useRecoilValue(atom[0]);
   const { nickname } = useRecoilValue(atom[1]);
+  const navigate = useNavigate();
 
   const [loggedOut, setLogOut] = useState(false);
 
   useEffect((): any => {
-    if (loggedOut && !ReceiveToken()) return (window.location.pathname = "/login");
+    if (loggedOut && !ReceiveToken()) return navigate("/login", { replace: true });
   }, [loggedOut]);
 
   return (

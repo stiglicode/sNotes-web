@@ -1,10 +1,12 @@
 import React from "react";
-import Editor from "../../layout/Editor";
+import RichTextEditor from "../../layout/Editor";
+import { RecoilState, useRecoilValue } from "recoil";
 
-const EditorLayer = () => {
+const EditorLayer: React.FC<{ atom: RecoilState<any>[] }> = ({ atom }) => {
+  const openState = useRecoilValue(atom[0]);
   return (
-    <div className={"layer editor-layer"}>
-      <Editor />
+    <div className={`layer ${!openState ? "close" : ""} editor-layer`}>
+      <RichTextEditor />
     </div>
   );
 };

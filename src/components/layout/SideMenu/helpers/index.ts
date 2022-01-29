@@ -1,13 +1,19 @@
 import React from "react";
 import axios from "axios";
 import ReceiveToken from "../../../../services/LocalStorage/jwt/receive-token";
-import { FlatItemType, TreeCallbackItemType, TreeItemType } from "../../../../utilities/types/tree.type";
+import { FlatItemType, IGroup, TreeCallbackItemType, TreeItemType } from "../../../../utilities/types/tree.type";
 import { SetterOrUpdater } from "recoil";
 
 export const createEvent = (
   type: string,
   ref: React.RefObject<HTMLInputElement>,
-  set: SetterOrUpdater<{ flat: FlatItemType[]; tree: TreeItemType[]; selected: TreeCallbackItemType }>,
+  set: SetterOrUpdater<{
+    flat: FlatItemType[];
+    tree: TreeItemType[];
+    groups: IGroup[];
+    selected: TreeCallbackItemType;
+    selectedGroup: IGroup;
+  }>,
   selected: TreeCallbackItemType
 ) => {
   const value = ref?.current?.value;
@@ -37,7 +43,13 @@ export const updateEvent = (
   type: string,
   newValue: string,
   _id: string,
-  set: SetterOrUpdater<{ flat: FlatItemType[]; tree: TreeItemType[]; selected: TreeCallbackItemType }>
+  set: SetterOrUpdater<{
+    flat: FlatItemType[];
+    tree: TreeItemType[];
+    groups: IGroup[];
+    selected: TreeCallbackItemType;
+    selectedGroup: IGroup;
+  }>
 ) => {
   const token = ReceiveToken();
 
@@ -67,7 +79,13 @@ export const deleteEvent = (
   id: number,
   record: string,
   record_detail: string,
-  set: SetterOrUpdater<{ flat: FlatItemType[]; tree: TreeItemType[]; selected: TreeCallbackItemType }>
+  set: SetterOrUpdater<{
+    flat: FlatItemType[];
+    tree: TreeItemType[];
+    groups: IGroup[];
+    selected: TreeCallbackItemType;
+    selectedGroup: IGroup;
+  }>
 ) => {
   const token = ReceiveToken();
 

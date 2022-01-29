@@ -6,6 +6,7 @@ export interface TreeItemType {
   children: TreeItemType[] | [];
   type: "file" | "folder";
   detail_id: string;
+  group?: string;
 }
 
 export interface FlatItemType {
@@ -13,8 +14,10 @@ export interface FlatItemType {
   _id: string;
   parent: number | null;
   child_id: number;
-  name: string;
+  title: string;
   type: "file" | "folder";
+  detail_id: string;
+  group?: string;
 }
 
 export interface TreeCallbackItemType {
@@ -29,5 +32,20 @@ export interface TreeCallbackItemType {
 export interface CachedTreeType {
   flat: FlatItemType[];
   tree: TreeItemType[];
+  groups: IGroup[];
   selected: TreeCallbackItemType;
+  selectedGroup: IGroup;
+}
+
+export interface IGroup {
+  id: string;
+  name: string;
+  shareable: boolean;
+  author: string;
+  icon: string;
+  defaultOpen?: boolean;
+  users?: {
+    id: string;
+    isAuthor: boolean;
+  }[];
 }

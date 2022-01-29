@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { CreateNewFolder, NoteAdd } from "@mui/icons-material";
-import { FlatItemType, TreeCallbackItemType, TreeItemType } from "../../../../utilities/types/tree.type";
+import { FlatItemType, IGroup, TreeCallbackItemType, TreeItemType } from "../../../../utilities/types/tree.type";
 import { RecoilState, useRecoilState } from "recoil";
 import { createEvent } from "../helpers";
 
@@ -8,7 +8,9 @@ interface ActionsProps {
   atom: RecoilState<{
     flat: FlatItemType[];
     tree: TreeItemType[];
+    groups: IGroup[];
     selected: TreeCallbackItemType;
+    selectedGroup: IGroup;
   }>;
 }
 

@@ -30,7 +30,6 @@ const Item: FC<ItemProps> = ({ node, index, onSelect, self }) => {
 
   const handleSaveNewTitle = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter" || event.code === "Enter") {
-      console.log(event);
       return setEditable(false);
     }
   };

@@ -19,6 +19,10 @@
 		transition: opacity .2s ease-in-out;
 	}
 
+	&.close {
+		pointer-events: all;
+	}
+
 	&.active {
 		padding: $gutter * 2;
 

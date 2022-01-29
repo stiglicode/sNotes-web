@@ -1,10 +1,10 @@
 import { atom } from "recoil";
 import { AUTH } from "../../../utilities/enums/authentication.enum";
-import { FlatItemType, TreeCallbackItemType, TreeItemType } from "../../../utilities/types/tree.type";
+import { FlatItemType, IGroup, TreeCallbackItemType, TreeItemType } from "../../../utilities/types/tree.type";
 
 export const ManagerOpenStateAtom = atom({
   key: "ManagerOpenStateAtom",
-  default: true as boolean,
+  default: false as boolean,
 });
 
 export const UserDetailsAtom = atom({
@@ -23,6 +23,18 @@ export const CacheStoreAtom = atom({
   default: {
     flat: [] as FlatItemType[],
     tree: [] as TreeItemType[],
+    groups: [] as IGroup[],
     selected: {} as TreeCallbackItemType,
+    selectedGroup: {} as IGroup,
+  },
+});
+
+export const SettingsAtom = atom({
+  key: "SettingsAtom",
+  default: {
+    __token: {
+      expireIn: 0 as number,
+      createdAt: 0 as number,
+    },
   },
 });

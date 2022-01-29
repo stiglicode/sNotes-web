@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Navigate, Outlet, Route, Routes } from "react-router-dom";
 import "./assets/styles/style.scss";
 import Signup from "./views/Account/Signup";
 import ReceiveToken from "./services/LocalStorage/jwt/receive-token";
@@ -8,18 +8,38 @@ import Signin from "./views/Account/Signin";
 import ErrorPage from "./views/Error";
 import axios from "axios";
 import Main from "./views/Main";
+import { useSetRecoilState } from "recoil";
+import { SettingsAtom } from "./views/Main/recoil/MainAtom";
 
 function App() {
   const [backendIsAlive, setBackendIsAlive] = useState(true);
+  const token = ReceiveToken();
+  const setTokenExpirationDate = useSetRecoilState(SettingsAtom);
 
   useEffect(() => {
     axios
-      .get("/")
-      .then(() => {
+      .get("/", { headers: { ["x-access-token"]: token } })
+      .then((res) => {
+        setTokenExpirationDate((prev) => ({
+          ...prev,
+          __token: {
+            expireIn: res.data.token.expireIn,
+            createdAt: res.data.token.createdAt,
+          },
+        }));
         return setBackendIsAlive(true);
       })
-      .catch(() => {
-        return setBackendIsAlive(false);
+      .catch((error) => {
+        const status = error.toJSON();
+        if (status.status === 401) {
+          setBackendIsAlive(true);
+          // return RemoveToken();
+        } else if (status.message === "Network Error") {
+          return setBackendIsAlive(false);
+        } else {
+          return setBackendIsAlive(false);
+        }
+        // return setBackendIsAlive(false);
       });
   }, []);
 
@@ -30,7 +50,7 @@ function App() {
           {ReceiveToken() ? (
             <>
               <Route path={"/"} element={<Main />}>
-                <Route path={"/settings"} />
+                <Route path={"/settings"} element={<Outlet />} />
               </Route>
               <Route path={"*"} element={<ErrorPage statusCode={404} message={"This page doesn't exist"} home />} />
             </>
