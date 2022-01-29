@@ -14,7 +14,7 @@ import ListRow from "./ListRow";
 
 const SideMenu: React.FC<{ atom: RecoilState<any>[] }> = ({ atom }) => {
   const managerVisibility = useRecoilValue(atom[0]);
-  const [{ tree, flat, groups, selected }, setCache] = useRecoilState<CachedTreeType>(atom[1]);
+  const [{ tree, flat, groups }, setCache] = useRecoilState<CachedTreeType>(atom[1]);
   const token = ReceiveToken();
 
   useEffect(() => {
@@ -64,7 +64,9 @@ const SideMenu: React.FC<{ atom: RecoilState<any>[] }> = ({ atom }) => {
       <Actions atom={atom[1]} />
       <div className={"side-menu_list"}>
         <List dense={true} component="nav" aria-labelledby="nested-list-subheader">
-          <ListRow groupData={groups} selectedSetter={setCache} treeData={tree} />
+          {groups.map((group, key) => {
+            return <ListRow key={key} groupData={group} selectedSetter={setCache} treeData={tree} />;
+          })}
         </List>
       </div>
     </div>

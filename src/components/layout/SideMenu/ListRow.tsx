@@ -1,4 +1,4 @@
-import React, { FC, Fragment } from "react";
+import React, { FC, Fragment, useState } from "react";
 import { Collapse, ListItemButton, ListItemIcon, ListItemText } from "@mui/material";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
@@ -7,46 +7,41 @@ import { CachedTreeType, IGroup, TreeItemType } from "../../../utilities/types/t
 import { SetterOrUpdater } from "recoil";
 
 interface Props {
-  groupData: IGroup[];
+  groupData: IGroup;
   treeData: TreeItemType[];
   selectedSetter: SetterOrUpdater<CachedTreeType>;
 }
 
 const ListRow: FC<Props> = ({ groupData, treeData, selectedSetter }) => {
-  return (
-    <>
-      {groupData.map((group, key) => {
-        const [open, setOpen] = React.useState(group?.defaultOpen);
+  const [open, setOpen] = useState(groupData?.defaultOpen);
 
-        const handleClick = () => {
-          setOpen(!open);
-        };
-        return (
-          <Fragment key={key}>
-            <ListItemButton onClick={handleClick} className={"side-menu_list--group"}>
-              <ListItemIcon className={"side-menu_list--group-icon"}>{group.icon}</ListItemIcon>
-              <ListItemText primary={group.name} />
-              {open ? (
-                <ExpandLess className={"side-menu_list--group-expand"} />
-              ) : (
-                <ExpandMore className={"side-menu_list--group-expand"} />
-              )}
-            </ListItemButton>
-            <Collapse in={open} timeout="auto" unmountOnExit>
-              <Tree
-                data={treeData}
-                selected={(data) => {
-                  selectedSetter((prev) => ({
-                    ...prev,
-                    selected: data,
-                  }));
-                }}
-              />
-            </Collapse>
-          </Fragment>
-        );
-      })}
-    </>
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
+  return (
+    <Fragment>
+      <ListItemButton onClick={handleClick} className={"side-menu_list--group"}>
+        <ListItemIcon className={"side-menu_list--group-icon"}>{groupData.icon}</ListItemIcon>
+        <ListItemText primary={groupData.name} />
+        {open ? (
+          <ExpandLess className={"side-menu_list--group-expand"} />
+        ) : (
+          <ExpandMore className={"side-menu_list--group-expand"} />
+        )}
+      </ListItemButton>
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        <Tree
+          data={treeData}
+          selected={(data) => {
+            selectedSetter((prev) => ({
+              ...prev,
+              selected: data,
+            }));
+          }}
+        />
+      </Collapse>
+    </Fragment>
   );
 };
 
