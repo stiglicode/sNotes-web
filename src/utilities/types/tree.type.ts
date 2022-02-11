@@ -1,3 +1,5 @@
+import { GroupIconsName } from "./group-icon.type";
+
 export interface TreeItemType {
   id: string;
   parent: number | null;
@@ -35,6 +37,7 @@ export interface CachedTreeType {
   groups: IGroup[];
   selected: TreeCallbackItemType;
   selectedGroup: IGroup;
+  updateGroups: boolean;
 }
 
 export interface IGroup {
@@ -42,10 +45,9 @@ export interface IGroup {
   name: string;
   shareable: boolean;
   author: string;
-  icon: string;
-  defaultOpen?: boolean;
-  users?: {
-    id: string;
-    isAuthor: boolean;
+  icon: GroupIconsName;
+  defaultOpen: boolean;
+  users: {
+    name: string;
   }[];
 }

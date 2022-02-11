@@ -7,18 +7,15 @@ import { CachedTreeType } from "../../../utilities/types/tree.type";
 import axios from "axios";
 import ReceiveToken from "../../../services/LocalStorage/jwt/receive-token";
 import { List } from "@mui/material";
-import SchoolIcon from "@mui/icons-material/School";
-import DeckIcon from "@mui/icons-material/Deck";
-import WorkIcon from "@mui/icons-material/Work";
 import ListRow from "./ListRow";
 
 const SideMenu: React.FC<{ atom: RecoilState<any>[] }> = ({ atom }) => {
-  const managerVisibility = useRecoilValue(atom[0]);
-  const [{ tree, flat, groups }, setCache] = useRecoilState<CachedTreeType>(atom[1]);
+  const { managerOpenStatus } = useRecoilValue(atom[0]);
+  const [{ tree, flat, groups, updateGroups }, setCache] = useRecoilState<CachedTreeType>(atom[1]);
   const token = ReceiveToken();
 
   useEffect(() => {
-    axios.get("/records/one", { headers: { ["x-access-token"]: token } }).then((res) => {
+    axios.get("/records/one").then((res) => {
       return setCache((prev) => {
         return {
           ...prev,
@@ -26,7 +23,30 @@ const SideMenu: React.FC<{ atom: RecoilState<any>[] }> = ({ atom }) => {
         };
       });
     });
-  }, []);
+    if (updateGroups) {
+      axios.get(`groups`).then((res) => {
+        return setCache((prev) => ({
+          ...prev,
+          groups: res.data.map((group: any) => {
+            return {
+              id: "null",
+              name: group.groupName,
+              shareable: group.groupShareable,
+              permanent: group.groupPermanent,
+              author: group.groupAuthor,
+              icon: group.groupIcon,
+              defaultOpen: group.defaultOpen,
+              users: group.groupContributors.map((contributor: string) => {
+                return { name: contributor };
+              }),
+            };
+          }),
+          updateGroups: false,
+        }));
+      });
+    }
+  }, [updateGroups]);
+
   useEffect(() => {
     setCache((prev) => {
       return {
@@ -36,30 +56,8 @@ const SideMenu: React.FC<{ atom: RecoilState<any>[] }> = ({ atom }) => {
     });
   }, [flat]);
 
-  const marks: { label: string; icon: JSX.Element; defaultOpen?: boolean }[] = [
-    {
-      label: "Personal",
-      icon: <DeckIcon />,
-      defaultOpen: true,
-    },
-    {
-      label: "School",
-      icon: <SchoolIcon />,
-    },
-    {
-      label: "Work",
-      icon: <WorkIcon />,
-    },
-  ];
-
-  useEffect(() => {
-    axios.get(`group`, { headers: { ["x-access-token"]: token } }).then((res) => {
-      console.log(res.data);
-    });
-  }, []);
-
   return (
-    <div className={`side-menu ${managerVisibility ? "active" : ""}`}>
+    <div className={`side-menu ${managerOpenStatus ? "active" : ""}`}>
       <SearchField atom={atom[1]} placeholder={"Search..."} />
       <Actions atom={atom[1]} />
       <div className={"side-menu_list"}>

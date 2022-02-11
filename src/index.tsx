@@ -6,8 +6,12 @@ import { RecoilRoot } from "recoil";
 import { createTheme, ThemeProvider } from "@mui/material";
 import axios from "axios";
 import colors from "./assets/styles/modules/colors.module.scss";
+import ReceiveToken from "./services/LocalStorage/jwt/receive-token";
+
+const token = ReceiveToken();
 
 axios.defaults.baseURL = process.env.REACT_APP_API_SERVER;
+axios.defaults.headers.common["x-access-token"] = token;
 
 const theme = createTheme({
   palette: {

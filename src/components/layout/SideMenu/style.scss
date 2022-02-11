@@ -40,10 +40,17 @@
 	}
 
 	&_actions {
+		width: 100%;
 		display: flex;
 		flex-direction: row;
-		height: fit-content;
 		margin-top: 1rem;
+
+		&--wrapper {
+			display: flex;
+			flex-direction: row;
+			height: fit-content;
+			width: 100%;
+		}
 
 		&--box {
 			display: flex;
@@ -56,6 +63,11 @@
 
 			&-button {
 				color: $primary;
+				transition: .2s;
+
+				&:hover {
+					color: darken($primary, 5%);
+				}
 			}
 
 			&:first-child {
@@ -65,7 +77,6 @@
 			&-input {
 				width: 100%;
 				opacity: 1;
-				//transition: .3s;
 				border: none;
 				outline: none;
 				background: unset;
@@ -76,21 +87,14 @@
 					color: $p-6;
 				}
 
-				//&:focus {
-				//	opacity: 1;
-				//}
 			}
 
 			&.focused {
 				width: 100%;
 			}
 
-			&:hover {
+			&:hover:not(&.no-hover) {
 				width: 100%;
-				//
-				//input {
-				//	opacity: 1;
-				//}
 			}
 		}
 	}

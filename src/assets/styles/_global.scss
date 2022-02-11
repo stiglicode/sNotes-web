@@ -1,0 +1,44 @@
+.notification {
+	position: relative;
+	color: $danger;
+
+	&-count {
+		position: absolute;
+		font-size: 0.625rem;
+		background-color: $danger;
+		color: #fff;
+		text-align: center;
+		text-indent: 0.0625rem;
+		width: 0.8125rem;
+		height: 0.8125rem;
+		border-radius: 625rem;
+		top: -0.375rem;
+		right: -0.375rem;
+		border: solid 0.125rem #fff;
+
+		&.list {
+			right: 1rem;
+			top: 50%;
+			transform: translateY(-50%);
+			color: $danger;
+			background-color: unset;
+			font-size: .9em;
+			text-indent: 0;
+			border: unset;
+		}
+
+		&.w-padding {
+			top: 0.25rem;
+			right: 0.25rem;
+			line-height: 1;
+			text-indent: 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+	}
+}
+
+.border-radius {
+	border-radius: $border-radius !important;
+}

@@ -8,9 +8,11 @@ interface FormInputProps {
   form: FormikProps<any>;
   type?: "text" | "email" | "password" | "number";
   err?: string;
+  autoFocus?: boolean;
+  variant?: "standard" | "outlined" | "filled" | undefined;
 }
 
-const FormInput = ({ label, name, form, type, err }: FormInputProps) => {
+const FormInput = ({ label, name, form, type, err = "", autoFocus = false, variant = "outlined" }: FormInputProps) => {
   return (
     <TextField
       label={label}
@@ -19,8 +21,10 @@ const FormInput = ({ label, name, form, type, err }: FormInputProps) => {
       onChange={form?.handleChange}
       type={type}
       size={"small"}
+      variant={variant}
       error={err !== "" ? Boolean(err) : form.touched[name] && Boolean(form.errors[name])}
       helperText={err !== "" ? err : form.touched[name] && form.errors[name]}
+      autoFocus={autoFocus}
     />
   );
 };

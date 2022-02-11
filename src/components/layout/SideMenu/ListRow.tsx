@@ -5,6 +5,7 @@ import ExpandMore from "@mui/icons-material/ExpandMore";
 import Tree from "../../ui/Tree";
 import { CachedTreeType, IGroup, TreeItemType } from "../../../utilities/types/tree.type";
 import { SetterOrUpdater } from "recoil";
+import GroupIcon from "../../ui/GroupIcon";
 
 interface Props {
   groupData: IGroup;
@@ -22,7 +23,9 @@ const ListRow: FC<Props> = ({ groupData, treeData, selectedSetter }) => {
   return (
     <Fragment>
       <ListItemButton onClick={handleClick} className={"side-menu_list--group"}>
-        <ListItemIcon className={"side-menu_list--group-icon"}>{groupData.icon}</ListItemIcon>
+        <ListItemIcon className={"side-menu_list--group-icon"}>
+          <GroupIcon name={groupData.icon} />
+        </ListItemIcon>
         <ListItemText primary={groupData.name} />
         {open ? (
           <ExpandLess className={"side-menu_list--group-expand"} />

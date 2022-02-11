@@ -1,11 +1,11 @@
 import React from "react";
-import { Button, IconButton, Modal } from "@mui/material";
-import { ModalType } from "../../../utilities/types/modal.type";
+import { Button, IconButton, List, ListItem, ListItemButton, ListItemText, Modal } from "@mui/material";
+import { IModal } from "../../../utilities/types/modal.type";
 import { Close } from "@mui/icons-material";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Draggable from "react-draggable";
 
-const CustomModal = ({
+const CustomModal: React.FC<IModal> = ({
   closeText = "Cancle",
   okText = "Ok",
   onOk,
@@ -15,8 +15,14 @@ const CustomModal = ({
   body,
   label,
   width = 500,
-}: ModalType) => {
+  footer = false,
+  bodyPadding = true,
+  headPadding = true,
+  list,
+}) => {
   const redirect = useNavigate();
+
+  const { tab, action } = useParams();
 
   const handleCloseEvent = (event: any) => {
     onClose && onClose(event);
@@ -39,7 +45,7 @@ const CustomModal = ({
         <Draggable handle={"#modal-head"} bounds={"parent"}>
           <div className={"modal-wrapper_box"} style={{ width: `${width / 16}rem` }}>
             {head ? (
-              <div className={"modal-wrapper_box--head"} id="modal-head">
+              <div className={`modal-wrapper_box--head ${headPadding ? "safe-space" : ""}`} id="modal-head">
                 <span className={"modal-wrapper_box--head-label"}>{label}</span>
                 <IconButton className={"modal-wrapper_box--head-close"} onClick={handleCloseEvent}>
                   <Close />
@@ -48,15 +54,47 @@ const CustomModal = ({
             ) : (
               <></>
             )}
-            <div className={"modal-wrapper_box--body"}>{body}</div>
-            <div className={"modal-wrapper_box--footer"}>
-              <Button variant={"contained"} onClick={handleCloseEvent}>
-                {closeText}
-              </Button>
-              <Button variant={"outlined"} onClick={handleOkEvent}>
-                {okText}
-              </Button>
+            <div className={"modal-wrapper_box--body"}>
+              {list.length ? (
+                <List dense className={"modal-wrapper_box--body-list"}>
+                  {list.map((item, key) => {
+                    return (
+                      <ListItem
+                        disablePadding
+                        key={key}
+                        selected={action === item.target}
+                        className={item.notifications > 0 ? "notification" : ""}
+                      >
+                        <ListItemButton onClick={() => redirect(`${tab}/${item.target}`)}>
+                          {item.icon}
+                          {item.notifications > 0 ? (
+                            <span className={"notification-count list"}>{item.notifications}</span>
+                          ) : (
+                            <></>
+                          )}
+                          <ListItemText primary={item.label} />
+                        </ListItemButton>
+                      </ListItem>
+                    );
+                  })}
+                </List>
+              ) : (
+                <></>
+              )}
+              <div className={`modal-wrapper_box--body-wrapper ${bodyPadding ? "safe-space" : ""}`}>{body}</div>
             </div>
+            {footer ? (
+              <div className={"modal-wrapper_box--footer"}>
+                <Button variant={"contained"} onClick={handleCloseEvent}>
+                  {closeText}
+                </Button>
+                <Button variant={"outlined"} onClick={handleOkEvent}>
+                  {okText}
+                </Button>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         </Draggable>
       </div>

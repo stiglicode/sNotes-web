@@ -1,0 +1,10 @@
+@import "./Actions/NewGroup/style";
+@import "./Actions/PendingGroups/style";
+@import "./Actions/ActiveGroups/style";
+
+.contributors-list {
+	display: flex;
+	flex-direction: column;
+	row-gap: 1rem;
+	margin-bottom: 2rem;
+}

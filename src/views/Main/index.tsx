@@ -2,28 +2,27 @@ import React, { useEffect } from "react";
 import EditorLayer from "../../components/layer/EditorLayer";
 import ManagementLayer from "../../components/layer/ManagementLayer";
 import { Close, Menu } from "@mui/icons-material";
-import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
-import { CacheStoreAtom, ManagerOpenStateAtom, SettingsAtom, UserDetailsAtom } from "./recoil/MainAtom";
+import { useRecoilState, useSetRecoilState } from "recoil";
+import { CacheStoreAtom, SettingsAtom, UserDetailsAtom } from "./recoil/MainAtom";
 import ReceiveToken from "../../services/LocalStorage/jwt/receive-token";
 import axios from "axios";
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { Button } from "@mui/material";
-import Modal from "../../components/ui/Modal";
-import { useCountdown } from "../../utilities/hooks/useCountdown";
+import Settings from "../../components/layer/ManagementLayer/Settings";
 
 const Main = () => {
-  const [isManagerOpen, setManagerOpen] = useRecoilState(ManagerOpenStateAtom);
+  const [{ managerOpenStatus }, setManagerOpen] = useRecoilState(SettingsAtom);
   const setUserDetails = useSetRecoilState(UserDetailsAtom);
-  const location = useLocation();
-  const { __token } = useRecoilValue(SettingsAtom);
-  const { hours, minutes, seconds } = useCountdown(__token.expireIn, { every: "second" });
+  const t = useParams();
+
+  // const { __token } = useRecoilValue(SettingsAtom);
+  // const { hours, minutes, seconds } = useCountdown(__token.expireIn, { every: "second" });
 
   useEffect(() => {
     const token = ReceiveToken();
-
     if (typeof token === "string" && token.length > 1) {
       axios
-        .post("/auth/user", { ["x-access-token"]: token })
+        .post("/auth/user")
         .then((res) => {
           return setUserDetails(res?.data);
         })
@@ -34,45 +33,22 @@ const Main = () => {
   }, []);
 
   const handleManagerOpen = () => {
-    return setManagerOpen(!isManagerOpen);
+    return setManagerOpen((prev) => ({ ...prev, managerOpenStatus: !managerOpenStatus }));
   };
+
+  useEffect(() => {
+    console.log(t);
+  }, [t]);
 
   return (
     <div className={"root-layer"}>
       <Button variant={"contained"} className={"manager-opener"} aria-label={"oppener"} onClick={handleManagerOpen}>
-        <Menu className={`${!isManagerOpen ? "active" : ""}`} />
-        <Close className={`${isManagerOpen ? "active" : ""}`} />
+        <Menu className={`${!managerOpenStatus ? "active" : ""}`} />
+        <Close className={`${managerOpenStatus ? "active" : ""}`} />
       </Button>
-      <EditorLayer atom={[ManagerOpenStateAtom]} />
-      <ManagementLayer atom={[ManagerOpenStateAtom, UserDetailsAtom, CacheStoreAtom]} />
-      {location.pathname === "/settings" ? (
-        <Modal
-          body={
-            <div>
-              <div>
-                <span>Hours: </span>
-                <strong>{hours}</strong>
-              </div>
-              <div>
-                <span>Minutes: </span>
-                <strong>{minutes}</strong>
-              </div>
-              <div>
-                <span>Seconds:</span>
-                <strong>{seconds}</strong>
-              </div>
-            </div>
-          }
-          onClose={() => console.log("aaa")}
-          onOk={() => {
-            console.log("bbb");
-          }}
-          closeText={"Dismis"}
-          label={"Global settings"}
-        />
-      ) : (
-        <></>
-      )}
+      <EditorLayer atom={[SettingsAtom]} />
+      <ManagementLayer atom={[SettingsAtom, UserDetailsAtom, CacheStoreAtom]} />
+      <Settings atom={[CacheStoreAtom, SettingsAtom]} />
     </div>
   );
 };

@@ -18,7 +18,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get("/", { headers: { ["x-access-token"]: token } })
+      .get("/")
       .then((res) => {
         setTokenExpirationDate((prev) => ({
           ...prev,
@@ -50,7 +50,12 @@ function App() {
           {ReceiveToken() ? (
             <>
               <Route path={"/"} element={<Main />}>
-                <Route path={"/settings"} element={<Outlet />} />
+                <Route path={"/settings"} element={<Outlet />}>
+                  <Route path={"/settings/:tab"} element={<Outlet />}>
+                    <Route path={"/settings/:tab/:action"} element={<Outlet />} />
+                  </Route>
+                </Route>
+                {/*<Route path={"settings/*"} caseSensitive element={<Outlet />} />*/}
               </Route>
               <Route path={"*"} element={<ErrorPage statusCode={404} message={"This page doesn't exist"} home />} />
             </>

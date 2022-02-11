@@ -12,3 +12,5 @@ export type SigninType = {
   [AUTH.EMAIL]: string;
   [AUTH.PASSWORD]: string;
 };
+
+export type IPermissions = "reader" | "writer";

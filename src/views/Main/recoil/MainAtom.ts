@@ -1,40 +1,43 @@
 import { atom } from "recoil";
 import { AUTH } from "../../../utilities/enums/authentication.enum";
-import { FlatItemType, IGroup, TreeCallbackItemType, TreeItemType } from "../../../utilities/types/tree.type";
+import { ICachedStoreAtom, ISettingsAtom, IUserDetails } from "../../../utilities/types/atom.type";
+import { IGroup, TreeCallbackItemType } from "../../../utilities/types/tree.type";
 
-export const ManagerOpenStateAtom = atom({
-  key: "ManagerOpenStateAtom",
-  default: false as boolean,
-});
-
-export const UserDetailsAtom = atom({
+export const UserDetailsAtom = atom<IUserDetails>({
   key: "UserDetailsAtom",
   default: {
-    [AUTH.NICKNAME]: "" as string,
-    [AUTH.FIRSTNAME]: "" as string,
-    [AUTH.LASTNAME]: "" as string,
-    [AUTH.EMAIL]: "" as string,
-    [AUTH.PERMISSION]: 0 as number,
+    [AUTH.NICKNAME]: "",
+    [AUTH.FIRSTNAME]: "",
+    [AUTH.LASTNAME]: "",
+    [AUTH.EMAIL]: "",
+    [AUTH.PERMISSION]: 0,
   },
 });
 
-export const CacheStoreAtom = atom({
+export const CacheStoreAtom = atom<ICachedStoreAtom>({
   key: "CacheStoreAtom",
   default: {
-    flat: [] as FlatItemType[],
-    tree: [] as TreeItemType[],
-    groups: [] as IGroup[],
+    flat: [],
+    tree: [],
+    groups: [],
     selected: {} as TreeCallbackItemType,
     selectedGroup: {} as IGroup,
+    updateGroups: true,
   },
 });
 
-export const SettingsAtom = atom({
+export const SettingsAtom = atom<ISettingsAtom>({
   key: "SettingsAtom",
   default: {
     __token: {
-      expireIn: 0 as number,
-      createdAt: 0 as number,
+      expireIn: 0,
+      createdAt: 0,
+    },
+    managerOpenStatus: true,
+    notifications: {
+      type: [],
+      count: 0,
+      updated: true,
     },
   },
 });
