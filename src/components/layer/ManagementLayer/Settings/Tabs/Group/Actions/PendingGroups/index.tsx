@@ -8,10 +8,7 @@ import GroupIcon from "../../../../../../../ui/GroupIcon";
 import { Button, Tooltip } from "@mui/material";
 import { Done } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
-
-const formattedDate = (date: string | Date) => {
-  return `${new Date(date).getDate()}.${new Date(date).getMonth()}.${new Date(date).getFullYear()}`;
-};
+import { formattedDate } from "../../../../../../../../utilities/date-formatter";
 
 const PendingGroups: PropsAndAtom<any> = ({ atom }) => {
   const [{ notifications }, updatePending] = useRecoilState<ISettingsAtom>(atom[1]);
@@ -56,8 +53,6 @@ const PendingGroups: PropsAndAtom<any> = ({ atom }) => {
     });
   };
 
-  console.log(notifications);
-
   return (
     <GroupBox
       title={
@@ -94,7 +89,9 @@ const PendingGroups: PropsAndAtom<any> = ({ atom }) => {
                 </Tooltip>
                 <div className={"pending-group_list--item-col"}>
                   <span className={"pending-group_list--item-label"}>Since:</span>
-                  <span className={"pending-group_list--item-text"}>{formattedDate(group.pendingCreateAt)}</span>
+                  <span className={"pending-group_list--item-text"}>
+                    {formattedDate(group.pendingCreateAt, "dd.mm.yyyy")}
+                  </span>
                 </div>
                 <div
                   className={"pending-group_list--item-col"}

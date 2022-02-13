@@ -33,6 +33,7 @@ export interface IUserDetails {
   [AUTH.LASTNAME]: string;
   [AUTH.EMAIL]: string;
   [AUTH.PERMISSION]: number;
+  id: string;
 }
 
 export type IAtom<A> = {

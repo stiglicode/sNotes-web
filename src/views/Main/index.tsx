@@ -8,7 +8,7 @@ import ReceiveToken from "../../services/LocalStorage/jwt/receive-token";
 import axios from "axios";
 import { Navigate, useParams } from "react-router-dom";
 import { Button } from "@mui/material";
-import Settings from "../../components/layer/ManagementLayer/Settings";
+import SettingsRoute from "../../components/layer/ManagementLayer/Settings";
 
 const Main = () => {
   const [{ managerOpenStatus }, setManagerOpen] = useRecoilState(SettingsAtom);
@@ -48,7 +48,7 @@ const Main = () => {
       </Button>
       <EditorLayer atom={[SettingsAtom]} />
       <ManagementLayer atom={[SettingsAtom, UserDetailsAtom, CacheStoreAtom]} />
-      <Settings atom={[CacheStoreAtom, SettingsAtom]} />
+      <SettingsRoute atom={[CacheStoreAtom, SettingsAtom, UserDetailsAtom]} />
     </div>
   );
 };

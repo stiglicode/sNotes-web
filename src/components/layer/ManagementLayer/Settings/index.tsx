@@ -11,7 +11,8 @@ import { IModalList } from "../../../../utilities/types/modal.type";
 import { AddBox, FiberNew, Groups } from "@mui/icons-material";
 
 const Settings: PropsAndAtom<any> = ({ atom }) => {
-  // const params = useParams();
+  const [mounted, setMounted] = useState(false);
+  const [unmount, setUnmount] = useState(false);
   const { notifications } = useRecoilValue<ISettingsAtom>(atom[1]);
   const [value, setValue] = useState(0);
   const navigate = useNavigate();
@@ -20,6 +21,24 @@ const Settings: PropsAndAtom<any> = ({ atom }) => {
   useEffect(() => {
     if (!params.tab) return setValue(0);
   }, [params]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setMounted(true);
+    }, 0);
+
+    return () => {
+      setMounted(false);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (unmount) {
+      setTimeout(() => {
+        navigate("/");
+      }, 300);
+    }
+  }, [mounted]);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -85,89 +104,94 @@ const Settings: PropsAndAtom<any> = ({ atom }) => {
   };
 
   return (
+    <Modal
+      body={
+        <Box>
+          <SettingsTabs />
+        </Box>
+      }
+      label={
+        <Box>
+          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+            <Tab label={<SettingsIcon />} onClick={() => setTabPath("")} style={{ minWidth: "fit-content" }} />
+            <Tab
+              label={
+                <div
+                  className={`${
+                    notifications.count > 0 && notifications.type.find((type) => type === "new-groups")
+                      ? "notification"
+                      : ""
+                  }`}
+                >
+                  {notifications.count > 0 && notifications.type.find((type) => type === "new-groups") ? (
+                    <span className={"notification-count"}>{notifications.count}</span>
+                  ) : (
+                    <></>
+                  )}
+                  <strong>{TAB.FIRST}</strong>
+                </div>
+              }
+              onClick={() => setTabPath(TAB.FIRST, false)}
+            />
+            <Tab
+              label={
+                <div
+                  className={`${
+                    notifications.count > 0 && notifications.type.find((type) => type === "new-group")
+                      ? "notification"
+                      : ""
+                  }`}
+                >
+                  {notifications.count > 0 && notifications.type.find((type: string) => type === "new-group") ? (
+                    <span className={"notification-count"}>{notifications.count}</span>
+                  ) : (
+                    <></>
+                  )}
+                  <strong>{TAB.SECOND}</strong>
+                </div>
+              }
+              onClick={() => setTabPath(TAB.SECOND, false)}
+            />
+            <Tab
+              label={
+                <div
+                  className={`${
+                    notifications.count > 0 && notifications.type.find((type) => type === "new-groups")
+                      ? "notification"
+                      : ""
+                  }`}
+                >
+                  {notifications.count > 0 && notifications.type.find((type) => type === "new-groups") ? (
+                    <span className={"notification-count"}>{notifications.count}</span>
+                  ) : (
+                    <></>
+                  )}
+                  <strong>{TAB.THIRD}</strong>
+                </div>
+              }
+              onClick={() => setTabPath(TAB.THIRD, false)}
+            />
+          </Tabs>
+        </Box>
+      }
+      headPadding={false}
+      width={1000}
+      list={modalListItems()}
+      maxHeight={600}
+      open={mounted}
+      onClose={() => {
+        setMounted(false);
+        setUnmount(true);
+      }}
+    />
+  );
+};
+const SettingsRoute: PropsAndAtom<any> = ({ atom }) => {
+  return (
     <Routes>
-      <Route
-        path={"/settings/*"}
-        element={
-          <Modal
-            body={
-              <Box>
-                <SettingsTabs />
-              </Box>
-            }
-            closeText={"Dismis"}
-            label={
-              <Box>
-                <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-                  <Tab label={<SettingsIcon />} onClick={() => setTabPath("")} style={{ minWidth: "fit-content" }} />
-                  <Tab
-                    label={
-                      <div
-                        className={`${
-                          notifications.count > 0 && notifications.type.find((type) => type === "new-groups")
-                            ? "notification"
-                            : ""
-                        }`}
-                      >
-                        {notifications.count > 0 && notifications.type.find((type) => type === "new-groups") ? (
-                          <span className={"notification-count"}>{notifications.count}</span>
-                        ) : (
-                          <></>
-                        )}
-                        <strong>{TAB.FIRST}</strong>
-                      </div>
-                    }
-                    onClick={() => setTabPath(TAB.FIRST, false)}
-                  />
-                  <Tab
-                    label={
-                      <div
-                        className={`${
-                          notifications.count > 0 && notifications.type.find((type) => type === "new-group")
-                            ? "notification"
-                            : ""
-                        }`}
-                      >
-                        {notifications.count > 0 && notifications.type.find((type: string) => type === "new-group") ? (
-                          <span className={"notification-count"}>{notifications.count}</span>
-                        ) : (
-                          <></>
-                        )}
-                        <strong>{TAB.SECOND}</strong>
-                      </div>
-                    }
-                    onClick={() => setTabPath(TAB.SECOND, false)}
-                  />
-                  <Tab
-                    label={
-                      <div
-                        className={`${
-                          notifications.count > 0 && notifications.type.find((type) => type === "new-groups")
-                            ? "notification"
-                            : ""
-                        }`}
-                      >
-                        {notifications.count > 0 && notifications.type.find((type) => type === "new-groups") ? (
-                          <span className={"notification-count"}>{notifications.count}</span>
-                        ) : (
-                          <></>
-                        )}
-                        <strong>{TAB.THIRD}</strong>
-                      </div>
-                    }
-                    onClick={() => setTabPath(TAB.THIRD, false)}
-                  />
-                </Tabs>
-              </Box>
-            }
-            headPadding={false}
-            width={1000}
-            list={modalListItems()}
-          />
-        }
-      />
+      <Route path={"/settings/*"} element={<Settings atom={atom} />} />
     </Routes>
   );
 };
 
-export default Settings;
+export default SettingsRoute;

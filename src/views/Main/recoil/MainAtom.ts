@@ -11,6 +11,7 @@ export const UserDetailsAtom = atom<IUserDetails>({
     [AUTH.LASTNAME]: "",
     [AUTH.EMAIL]: "",
     [AUTH.PERMISSION]: 0,
+    id: "",
   },
 });
 

@@ -20,5 +20,10 @@ export interface IModal {
   footer?: boolean;
   bodyPadding?: boolean;
   headPadding?: boolean;
-  list: IModalList[];
+  list?: IModalList[];
+  maxHeight?: number;
+  open: boolean;
+  disable?: boolean;
+  okType?: "inherit" | "primary" | "secondary" | "success" | "error" | "info" | "warning" | undefined;
+  closeType?: "inherit" | "primary" | "secondary" | "success" | "error" | "info" | "warning" | undefined;
 }

@@ -34,11 +34,10 @@ const SideMenu: React.FC<{ atom: RecoilState<any>[] }> = ({ atom }) => {
               shareable: group.groupShareable,
               permanent: group.groupPermanent,
               author: group.groupAuthor,
+              isAuthor: group.groupIsAuthor,
               icon: group.groupIcon,
               defaultOpen: group.defaultOpen,
-              users: group.groupContributors.map((contributor: string) => {
-                return { name: contributor };
-              }),
+              users: group.groupContributors,
             };
           }),
           updateGroups: false,

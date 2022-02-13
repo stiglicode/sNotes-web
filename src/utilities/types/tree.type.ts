@@ -40,14 +40,20 @@ export interface CachedTreeType {
   updateGroups: boolean;
 }
 
+export interface IGroupContributors {
+  name: string;
+  permission: string;
+  since: string;
+  id: string;
+}
+
 export interface IGroup {
   id: string;
   name: string;
   shareable: boolean;
   author: string;
+  isAuthor: boolean;
   icon: GroupIconsName;
   defaultOpen: boolean;
-  users: {
-    name: string;
-  }[];
+  users: IGroupContributors[];
 }

@@ -5,12 +5,39 @@
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	position: relative;
+	position: absolute;
+	inset: 0;
+	z-index: 999;
+
+	&.exit-active &_mask {
+		opacity: 0;
+	}
+
+	&.exit-active &_box {
+		opacity: 0;
+		transform: scale(1.6);
+	}
 
 	&_mask {
 		position: absolute;
 		display: block;
 		inset: 0;
+		background-color: #000;
+		opacity: .3;
+		transition: .3s;
+
+		animation-name: fadeIn;
+		animation-duration: .3s;
+		animation-iteration-count: 1;
+
+		@keyframes fadeIn {
+			from {
+				opacity: 0;
+			}
+			to {
+				opacity: .3;
+			}
+		}
 	}
 
 	&_box {
@@ -18,9 +45,35 @@
 		border-radius: $border-radius;
 		pointer-events: all;
 		position: relative;
-		z-index: 999;
-		display: block;
+		display: flex;
+		flex-direction: column;
 		resize: both;
+		transform: scale(1);
+		opacity: 1;
+		transition: .3s;
+
+		animation-name: scaleUp;
+		animation-duration: .3s;
+		animation-iteration-count: 1;
+
+		@keyframes scaleUp {
+			from {
+				transform: scale(.5);
+				opacity: 0;
+			}
+			to {
+				transform: scale(1);
+				opacity: 1;
+			}
+		}
+
+		&--parent {
+			position: relative;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: center;
+		}
 
 		&--head {
 			display: flex;
@@ -46,6 +99,8 @@
 		&--body {
 			display: flex;
 			flex-direction: row;
+			height: calc(100% - 48px);
+			overflow-y: hidden;
 			//column-gap: 1.25rem;
 
 			&-list {
@@ -72,9 +127,14 @@
 
 			&-wrapper {
 				flex: 1;
+				overflow-y: auto;
 
 				&.safe-space {
 					padding: $gutter * 4 $gutter * 2 $gutter * 2 $gutter * 3;
+				}
+
+				&.y-padd {
+					padding: $gutter * 2 $gutter * 2 $gutter * 2 $gutter * 2;
 				}
 			}
 		}

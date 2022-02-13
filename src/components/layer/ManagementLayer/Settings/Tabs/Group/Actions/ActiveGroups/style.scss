@@ -1,11 +1,33 @@
 .active-group_list {
+	cursor: default;
+
 	&--item {
+		& .opened {
+			background-color: $p-2;
+			border-bottom-left-radius: unset !important;
+			border-bottom-right-radius: unset !important;
+
+			&:hover {
+				background-color: rgba(0, 0, 0, 0.04);
+			}
+		}
+
+		&:hover &-exit {
+			transition: .3s;
+			opacity: 1;
+		}
+
+		&-exit {
+			opacity: 0;
+		}
+
 		&-name {
 			display: flex;
 			flex-direction: row;
 			align-items: center;
 			height: 25px;
 			margin-left: 1.5rem;
+			width: fit-content;
 
 			&_input {
 				outline: unset;
@@ -59,6 +81,10 @@
 				color: $primary;
 				transition: .2s;
 
+				&.disabled:active {
+					transform: unset;
+				}
+
 				&:active {
 					transform: scale(.93);
 				}
@@ -99,6 +125,77 @@
 					&.disable {
 						color: $p-6;
 						transform: translateY(0) scale(1);
+					}
+				}
+			}
+		}
+
+		&-contributors {
+			display: flex;
+			flex-direction: column;
+			padding: 1rem;
+			background-color: $p-1;
+			border-radius: 0 0 $border-radius $border-radius;
+			border-bottom: solid 1px $p-2;
+			border-left: solid 1px $p-2;
+			border-right: solid 1px $p-2;
+
+			&_title {
+				font-size: 1.125rem;
+				font-weight: bold;
+				color: $p-8;
+				margin-bottom: 1em;
+			}
+
+			&_list {
+				display: flex;
+				flex-direction: column;
+
+				&--item {
+					display: flex;
+					flex-direction: row;
+					justify-content: space-between;
+					margin-top: -1px;
+
+					&:hover &-column_delete {
+						opacity: 1;
+						transition: .3s;
+					}
+
+					&-column {
+						display: flex;
+						flex-direction: row;
+						align-items: center;
+
+						&_delete {
+							opacity: 0;
+						}
+
+						&.non-edit {
+							font-size: 1rem;
+							display: flex;
+							flex-direction: row;
+							column-gap: .5rem;
+
+							.pending-group_list--item-col {
+								width: 150px;
+								white-space: nowrap;
+								overflow: hidden;
+								text-overflow: ellipsis;
+							}
+
+							//span {
+
+							//
+							//	color: $p-8;
+							//
+							//	&:last-child {
+							//		color: $p-6;
+							//	}
+							//}
+
+
+						}
 					}
 				}
 			}
