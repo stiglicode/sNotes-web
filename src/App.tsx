@@ -10,11 +10,12 @@ import axios from "axios";
 import Main from "./views/Main";
 import { useSetRecoilState } from "recoil";
 import { SettingsAtom } from "./views/Main/recoil/MainAtom";
+import { ISettingsAtom } from "./utilities/types/atom.type";
 
 function App() {
   const [backendIsAlive, setBackendIsAlive] = useState(true);
-  const token = ReceiveToken();
-  const setTokenExpirationDate = useSetRecoilState(SettingsAtom);
+  const setTokenExpirationDate = useSetRecoilState<ISettingsAtom>(SettingsAtom);
+  const [tokenExpired, setTokenExpired] = useState(false);
 
   useEffect(() => {
     axios
@@ -29,17 +30,20 @@ function App() {
         }));
         return setBackendIsAlive(true);
       })
+      .catch((err) => {
+        if (err.response.data.status === 401) {
+          setTokenExpired(true);
+        }
+      })
       .catch((error) => {
         const status = error.toJSON();
         if (status.status === 401) {
           setBackendIsAlive(true);
-          // return RemoveToken();
         } else if (status.message === "Network Error") {
           return setBackendIsAlive(false);
         } else {
           return setBackendIsAlive(false);
         }
-        // return setBackendIsAlive(false);
       });
   }, []);
 
@@ -47,7 +51,7 @@ function App() {
     <div className={"root-wrapper"}>
       {backendIsAlive ? (
         <Routes>
-          {ReceiveToken() ? (
+          {ReceiveToken() && !tokenExpired ? (
             <>
               <Route path={"/"} element={<Main />}>
                 <Route path={"/settings"} element={<Outlet />}>
@@ -55,7 +59,6 @@ function App() {
                     <Route path={"/settings/:tab/:action"} element={<Outlet />} />
                   </Route>
                 </Route>
-                {/*<Route path={"settings/*"} caseSensitive element={<Outlet />} />*/}
               </Route>
               <Route path={"*"} element={<ErrorPage statusCode={404} message={"This page doesn't exist"} home />} />
             </>
